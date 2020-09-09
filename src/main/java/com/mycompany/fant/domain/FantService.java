@@ -36,13 +36,12 @@ import no.ntnu.tollefsen.auth.User;
 @DeclareRoles({Group.USER})
 public class FantService {
     
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
             
     @Context
     SecurityContext sc;
 
     @PersistenceContext
-    EntityManager em = emf.createEntityManager();
+    EntityManager em;
     
 
     /**
