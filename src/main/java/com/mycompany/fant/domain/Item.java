@@ -15,9 +15,7 @@ import lombok.NoArgsConstructor;
 import no.ntnu.tollefsen.auth.User;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.io.Serializable;
-import java.util.List;
 
 import static com.mycompany.fant.domain.Item.FIND_ALL_ITEMS;
 
@@ -43,8 +41,8 @@ public class Item implements Serializable {
     @ManyToOne
     @JoinColumn(nullable = false)
     private User itemOwner;
-
+/*
     @ManyToOne
     private User itemBuyer;
-
+*/
 }

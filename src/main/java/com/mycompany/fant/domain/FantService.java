@@ -5,19 +5,18 @@
  */
 package com.mycompany.fant.domain;
 
-import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.validation.constraints.NotBlank;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -46,7 +45,6 @@ public class FantService {
      */
     @GET
     @Path("items")
-    @RolesAllowed({Group.USER})
     public List<Item> getAllItems() {
         return em.createNamedQuery(Item.FIND_ALL_ITEMS, Item.class).getResultList();
     }
