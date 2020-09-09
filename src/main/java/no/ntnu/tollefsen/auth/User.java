@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.util.converter.LocalDateTimeStringConverter;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;

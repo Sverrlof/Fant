@@ -1,7 +1,7 @@
 package no.ntnu.tollefsen.auth;
 
 
-import com.mycompany.mavenproject1.config.DatasourceProducer;
+import com.mycompany.fant.config.DatasourceProducer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
