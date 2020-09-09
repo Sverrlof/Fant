@@ -1,6 +1,6 @@
 
 
-package com.mycompany.mavenproject1.domain;
+package com.mycompany.fant.domain;
 
 
 import lombok.AllArgsConstructor;

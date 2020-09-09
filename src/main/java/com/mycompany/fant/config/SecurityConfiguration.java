@@ -1,4 +1,4 @@
-package com.mycompany.mavenproject1.config;
+package com.mycompany.fant.config;
 
 import javax.annotation.security.DeclareRoles;
 import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;

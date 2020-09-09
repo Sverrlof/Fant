@@ -1,0 +1,12 @@
+no/ntnu/tollefsen/auth/AuthRunOnStartup.class
+com/mycompany/fant/resources/JavaEE8Resource.class
+com/mycompany/fant/domain/Item.class
+no/ntnu/tollefsen/auth/User$State.class
+no/ntnu/tollefsen/auth/Group.class
+com/mycompany/fant/config/SecurityConfiguration.class
+com/mycompany/fant/config/DatasourceProducer.class
+no/ntnu/tollefsen/auth/AuthenticationService.class
+no/ntnu/tollefsen/auth/KeyService.class
+com/mycompany/fant/JAXRSConfiguration.class
+com/mycompany/fant/domain/Photo.class
+no/ntnu/tollefsen/auth/User.class
