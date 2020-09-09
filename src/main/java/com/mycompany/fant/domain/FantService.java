@@ -10,11 +10,14 @@ import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -33,11 +36,13 @@ import no.ntnu.tollefsen.auth.User;
 @DeclareRoles({Group.USER})
 public class FantService {
     
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("my_persistence_unit");
+            
     @Context
     SecurityContext sc;
 
     @PersistenceContext
-    EntityManager em;
+    EntityManager em = emf.createEntityManager();
     
 
     /**
@@ -85,5 +90,17 @@ public class FantService {
         return em.find(User.class, sc.getUserPrincipal().getName());
     }
     
+    @PUT
+    @Path("purchase")
+    @RolesAllowed({Group.USER})
+    private Response purchaseItem(@FormParam("iid") long itemid) {
+       User user = this.getCurrentUser();
+       Item item = em.find(Item.class, itemid);
+       
+       
+    
+       return null;
+    }
+        
 
 }

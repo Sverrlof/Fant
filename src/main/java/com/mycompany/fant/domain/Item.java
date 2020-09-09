@@ -7,7 +7,7 @@ package com.mycompany.fant.domain;
 
 /**
  *
- * @author Bruker
+ * @author 
  */
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +28,7 @@ import static com.mycompany.fant.domain.Item.FIND_ALL_ITEMS;
 public class Item implements Serializable {
 
     public static final String FIND_ALL_ITEMS = "Item.findAllItems";
-
-   // private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long itemid;
@@ -41,8 +40,5 @@ public class Item implements Serializable {
     @ManyToOne
     @JoinColumn(nullable = false)
     private User itemOwner;
-/*
-    @ManyToOne
-    private User itemBuyer;
-*/
+
 }
