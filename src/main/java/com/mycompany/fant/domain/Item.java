@@ -40,5 +40,8 @@ public class Item implements Serializable {
     @ManyToOne
     @JoinColumn(nullable = false)
     private User itemOwner;
+    
+    @ManyToOne
+    private User itemBuyer;
 
 }

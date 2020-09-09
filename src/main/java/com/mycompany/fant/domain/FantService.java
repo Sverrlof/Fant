@@ -88,19 +88,6 @@ public class FantService {
     
     private User getCurrentUser() {
         return em.find(User.class, sc.getUserPrincipal().getName());
-    }
-    
-    @PUT
-    @Path("purchase")
-    @RolesAllowed({Group.USER})
-    private Response purchaseItem(@FormParam("iid") long itemid) {
-       User user = this.getCurrentUser();
-       Item item = em.find(Item.class, itemid);
-       
-       
-    
-       return null;
-    }
-        
+    }   
 
 }
