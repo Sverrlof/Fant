@@ -5,6 +5,7 @@
  */
 package com.mycompany.fant.domain;
 
+import java.nio.file.Files;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
@@ -97,15 +98,23 @@ public class FantService {
      * @return
      *
      */
-    /*@Path("purchase")
+    @Path("purchase")
     @RolesAllowed({Group.USER})
     public Response purchaseItem(@FormParam("iid") long itemid) {
-
-        return null;
-    }*/
+        User buyer = this.getCurrentUser();
+        Item item = em.find(Item.class, itemid);
+        
+        if (item != null){
+            item.setItemBuyer(buyer);
+            return Response.ok().build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+    
+    
     /**
      * Delete method.A user should be able to delete an item that is posted by
- himself.
+     * himself.
      * @param itemid
      * @return 
      */
