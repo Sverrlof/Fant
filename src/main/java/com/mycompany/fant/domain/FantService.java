@@ -97,19 +97,6 @@ public class FantService {
         return em.find(User.class, sc.getUserPrincipal().getName());
     }
 
-    @PUT
-    @Path("email")
-    @RolesAllowed({Group.USER})
-    public Response setEmail(
-            @QueryParam("uid") String uid,
-            @FormParam("email") String email) {
-        User user = this.getCurrentUser();
-        if (user.getEmail() == null) {
-            user.setEmail(email);
-        }
-        return Response.ok().build();
-    }
-
     /**
      * Purchases an item. Should only be possible if buyer is logged in
      *
@@ -127,7 +114,7 @@ public class FantService {
         if (item != null) {
             if (item.getItemBuyer() == null) {
                 item.setItemBuyer(buyer);
-                mailService.sendEmail(item.getItemOwner().getEmail(), "FANT SERVICES Item sold", "Your item was sold" + item.getItem());
+                mailService.sendEmail(item.getItemOwner().getEmail(), "FANT SERVICES Item sold", "Your item was sold " + item.getItem());
                 return Response.ok().build();
             }
         }
