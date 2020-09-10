@@ -80,6 +80,8 @@ public class FantService {
             @FormParam("description") String description,
             @FormParam("price") int price) {
 
+// TODO:: IMAGES NEEDS TO BE IMPLEMENTED TO THE ADDITEM METHOD!!
+
         User user = this.getCurrentUser();
         Item newItem = new Item();
 
@@ -142,4 +144,6 @@ public class FantService {
         }
         return Response.status(Response.Status.NOT_FOUND).build();
     }
+    
+    //TODO :: IMPLEMENT A getImage() METHOD!!!
 }
