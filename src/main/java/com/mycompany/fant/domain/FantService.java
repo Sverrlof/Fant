@@ -5,7 +5,6 @@
  */
 package com.mycompany.fant.domain;
 
-import java.nio.file.Files;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
@@ -23,8 +22,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import no.ntnu.tollefsen.auth.AuthenticationService;
 import no.ntnu.tollefsen.auth.Group;
 import no.ntnu.tollefsen.auth.User;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
  *
@@ -35,12 +36,19 @@ import no.ntnu.tollefsen.auth.User;
 @DeclareRoles({Group.USER})
 public class FantService {
 
+    @Inject
+    AuthenticationService authService;
+
+    @Inject
+    @ConfigProperty(name = "photo.storage.path", defaultValue = "fantphotos")
+    String photoPath;
+    
     @Context
     SecurityContext sc;
 
     @PersistenceContext
     EntityManager em;
-    
+
     @Inject
     MailService mailService;
 
@@ -85,9 +93,21 @@ public class FantService {
         return Response.ok().build();
     }
 
-    
     private User getCurrentUser() {
         return em.find(User.class, sc.getUserPrincipal().getName());
+    }
+
+    @PUT
+    @Path("email")
+    @RolesAllowed({Group.USER})
+    public Response setEmail(
+            @QueryParam("uid") String uid,
+            @FormParam("email") String email) {
+        User user = this.getCurrentUser();
+        if (user.getEmail() == null) {
+            user.setEmail(email);
+        }
+        return Response.ok().build();
     }
 
     /**
@@ -100,24 +120,26 @@ public class FantService {
     @PUT
     @Path("purchase")
     @RolesAllowed({Group.USER})
-    public Response purchaseItem(@FormParam("iid") long itemid) {
+    public Response purchaseItem(@QueryParam("iid") long itemid) {
         User buyer = this.getCurrentUser();
         Item item = em.find(Item.class, itemid);
-        
-        if (item != null){
-            item.setItemBuyer(buyer);
-            mailService.sendEmail(item.getItemOwner().getEmail(),"Your item sold", "Your item was sold: " + item.getItem());
-            return Response.ok().build();
+
+        if (item != null) {
+            if (item.getItemBuyer() == null) {
+                item.setItemBuyer(buyer);
+                mailService.sendEmail(item.getItemOwner().getEmail(), "FANT SERVICES Item sold", "Your item was sold" + item.getItem());
+                return Response.ok().build();
+            }
         }
         return Response.status(Response.Status.NOT_FOUND).build();
     }
-    
-    
+
     /**
      * Delete method.A user should be able to delete an item that is posted by
      * himself.
+     *
      * @param itemid
-     * @return 
+     * @return
      */
     @Path("delete")
     @DELETE
@@ -128,7 +150,7 @@ public class FantService {
         if (item != null) {
             if (item.getItemOwner().getUserid().equals(user.getUserid())) {
                 em.remove(item);
-                return Response.ok(item).build();   
+                return Response.ok(item).build();
             }
         }
         return Response.status(Response.Status.NOT_FOUND).build();
