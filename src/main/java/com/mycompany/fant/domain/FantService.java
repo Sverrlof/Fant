@@ -98,6 +98,7 @@ public class FantService {
      * @return
      *
      */
+    @PUT
     @Path("purchase")
     @RolesAllowed({Group.USER})
     public Response purchaseItem(@FormParam("iid") long itemid) {
