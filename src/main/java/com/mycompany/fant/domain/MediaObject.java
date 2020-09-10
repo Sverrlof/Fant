@@ -22,16 +22,18 @@ import lombok.EqualsAndHashCode;
  * @author mikael
  */
 @Entity
-@Data @EqualsAndHashCode(callSuper = false)
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class MediaObject extends AbstractDomain {
+
     @Id
     String id;
-    
+
     String name;
-    
+
     long filesize;
     String mimeType;
-    
+
     @JoinColumn(nullable = false)
     @ManyToOne
     User owner;
@@ -39,7 +41,7 @@ public class MediaObject extends AbstractDomain {
     protected MediaObject() {
         super();
     }
-    
+
     public MediaObject(String id, User owner) {
         this();
         this.id = id;
@@ -54,3 +56,4 @@ public class MediaObject extends AbstractDomain {
         this.filesize = filesize;
         this.mimeType = mimetype;
     }
+}
