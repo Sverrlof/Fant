@@ -10,22 +10,17 @@ import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import no.ntnu.tollefsen.auth.Group;
@@ -45,6 +40,9 @@ public class FantService {
 
     @PersistenceContext
     EntityManager em;
+    
+    @Inject
+    MailService mailService;
 
     /**
      * Returns a list of all the items in Fant
@@ -87,6 +85,7 @@ public class FantService {
         return Response.ok().build();
     }
 
+    
     private User getCurrentUser() {
         return em.find(User.class, sc.getUserPrincipal().getName());
     }
@@ -107,6 +106,7 @@ public class FantService {
         
         if (item != null){
             item.setItemBuyer(buyer);
+            mailService.sendEmail(item.getItemOwner().getEmail(),"Your item sold", "Your item was sold: " + item.getItem());
             return Response.ok().build();
         }
         return Response.status(Response.Status.NOT_FOUND).build();

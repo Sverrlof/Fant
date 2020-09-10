@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.fant;
+package com.mycompany.fant.domain;
 
 import java.util.Properties;
 import java.util.logging.Level;
@@ -24,6 +24,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
  *
  * @author sverrelofthus
  */
+@Stateless
 public class MailService {
 
     @Inject
@@ -54,7 +55,6 @@ public class MailService {
             props.put("mail.smtp.host", smtpHost);
             props.put("mail.smtp.port", "587");
             Session mailSession = Session.getInstance(props, new Authenticator() {
-                @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(smtpUser, smtpPassword);
                 }
